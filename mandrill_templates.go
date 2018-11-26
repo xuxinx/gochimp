@@ -29,7 +29,7 @@ const templates_time_series_endpoint string = "/templates/time-series.json" //Re
 const templates_render_endpoint string = "/templates/render.json"           //Inject content and optionally merge fields into a template, returning the HTML that results
 
 // can error with one of the following: Unknown_Template, Invalid_Key, ValidationError, GeneralError
-func (a *MandrillAPI) TemplateAdd(name string, code string, publish bool) (Template, error) {
+func (a *MandrillAPI) TemplateAdd(name string, code string, publish bool, subject string) (Template, error) {
 	if name == "" {
 		return Template{}, errors.New("name cannot be blank")
 	}
@@ -40,6 +40,7 @@ func (a *MandrillAPI) TemplateAdd(name string, code string, publish bool) (Templ
 	params["name"] = name
 	params["code"] = code
 	params["publish"] = publish
+	params["subject"] = subject
 	return execute(a, params, templates_add_endpoint)
 }
 
@@ -54,7 +55,7 @@ func (a *MandrillAPI) TemplateInfo(name string) (Template, error) {
 }
 
 // can error with one of the following: Unknown_Template, Invalid_Key, ValidationError, GeneralError
-func (a *MandrillAPI) TemplateUpdate(name string, code string, publish bool) (Template, error) {
+func (a *MandrillAPI) TemplateUpdate(name string, code string, publish bool, subject string) (Template, error) {
 	if name == "" {
 		return Template{}, errors.New("name cannot be blank")
 	}
@@ -65,6 +66,7 @@ func (a *MandrillAPI) TemplateUpdate(name string, code string, publish bool) (Te
 	params["name"] = name
 	params["code"] = code
 	params["publish"] = publish
+	params["subject"] = subject
 	return execute(a, params, templates_update_endpoint)
 }
 
